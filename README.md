@@ -18,3 +18,34 @@ Lingua was created to provide a easier language learning and flashcard tool than
 2. There is no **Grammar learning** feature for many languages in any other service
 
 ## Solutions
+
+
+
+
+
+
+## Contributing
+Lingua Desktop is written with NextJS (Javascript) and Tauri (Rust).
+### Step 1: [Download Npm and NodeJS](nodejs.org)
+
+### Step 2:
+```bash
+  git clone https://github.com/BunnyGamezsc/lingua.git
+  cd lingua
+  npm install
+```
+
+## Run/Build
+
+### 1a. Run Desktop App Dev Server
+```bash
+  npm run dev -w app/desktop
+```
+### 1b. Run Desktop App
+```bash
+  npm run app -w app/desktop
+```
+### 2. Run Web App Dev Server
+```bash
+  npm run dev -w web/desktop
+```
