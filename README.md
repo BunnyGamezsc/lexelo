@@ -47,5 +47,5 @@ Lingua Desktop is written with NextJS (Javascript) and Tauri (Rust).
 ```
 ### 2. Run Web App Dev Server
 ```bash
-  npm run dev -w web/desktop
+  npm run dev -w app/web
 ```
