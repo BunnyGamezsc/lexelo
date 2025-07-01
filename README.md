@@ -26,7 +26,7 @@ Lingua was created to provide a easier language learning and flashcard tool than
 
 ## Contributing
 Lingua Desktop is written with NextJS (Javascript) and Tauri (Rust).
-### Step 1: [Download Npm and NodeJS](nodejs.org)
+### Step 1: [Download Npm and NodeJS](https://nodejs.org/)
 
 ### Step 2:
 ```bash
