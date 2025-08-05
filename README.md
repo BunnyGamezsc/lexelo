@@ -1,4 +1,7 @@
-# Lingua
+# Lexelo <sub><sup><sub><sup>(Originally Lingua)</sup></sub></sup></sub>
+
+
+
 
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-green?&style=for-the-badge)](https://opensource.org/licenses/Apache-2.0)
@@ -9,7 +12,7 @@
 [![Rust](https://img.shields.io/badge/rust-red.svg?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
 
 ## Purpose
-Lingua was created to provide a easier language learning and flashcard tool than other companies (like Quizlet)
+Lexelo was created to provide a easier language learning and flashcard tool than other companies (like Quizlet)
 
 (This project is in progress for the first release)
 
@@ -25,13 +28,13 @@ Lingua was created to provide a easier language learning and flashcard tool than
 
 
 ## Contributing
-Lingua Desktop is written with NextJS (Javascript) and Tauri (Rust).
+Lexelo Desktop is written with NextJS (Javascript) and Tauri (Rust).
 ### Step 1: [Download Npm and NodeJS](https://nodejs.org/)
 
 ### Step 2:
 ```bash
-  git clone https://github.com/BunnyGamezsc/lingua.git
-  cd lingua
+  git clone https://github.com/BunnyGamezsc/lexelo.git
+  cd lexelo
   npm install
 ```
 
