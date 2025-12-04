@@ -1,27 +1,22 @@
 {
-  "name": "lingua",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "shadcn-ui-monorepo",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "app": "npm run app -w app/desktop",
-    "dev": "npm run dev -w app/web"
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "workspaces": [
-    "app/web",
-    "app/frontend",
-    "app/desktop"
-  ],
-  "dependencies": {
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.536.0",
-    "tailwind-merge": "^3.3.1",
-    "tw-animate-css": "^1.3.6"
+  "devDependencies": {
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "prettier": "^3.6.2",
+    "turbo": "^2.5.5",
+    "typescript": "5.7.3"
+  },
+  "packageManager": "pnpm@10.4.1",
+  "engines": {
+    "node": ">=20"
   }
 }
