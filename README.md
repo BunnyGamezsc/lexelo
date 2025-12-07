@@ -52,3 +52,10 @@ Lexelo Desktop is written with NextJS (Javascript) and Tauri (Rust).
 ```bash
   npm run dev -w app/web
 ```
+
+### License
+**Copyright 2025 BunnyGamezsc** \
+Licensed under the PolyForm Noncommercial License 1.0.0 \
+You may obtain a copy of the License at
+[https://polyformproject.org/licenses/noncommercial/1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0)
+
