@@ -4,8 +4,8 @@
 
 
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-green?&style=for-the-badge)](https://opensource.org/licenses/Apache-2.0)
-[![Version](https://img.shields.io/badge/version-Beta%201-blue?&style=for-the-badge)](https://github.com/BunnyGamezsc/Effectue-Solid/releases)
+[![License](https://img.shields.io/badge/License-PolyForm%20Noncommercial-green?&style=for-the-badge)](https://polyformproject.org/licenses/noncommercial/1.0.0)
+[![Version](https://img.shields.io/badge/version-Beta%201-blue?&style=for-the-badge)](https://github.com/BunnyGamezsc/lexelo/releases)
 <br>
 [![NextJS](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
 [![Tauri](https://img.shields.io/badge/Tauri-24C8D8.svg?style=for-the-badge&logo=Tauri&logoColor=white)](https://tauri.app/)
