@@ -9,7 +9,15 @@
     "core:default",
     "deep-link:default",
     "opener:default",
-    "opener:default",
-    "opener:default"
+    "clerk:default",
+    "store:default",
+    {
+      "identifier": "http:default",
+      "allow": [
+        {
+          "url": "https://*"
+        }
+      ]
+    }
   ]
 }

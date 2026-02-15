@@ -18,7 +18,7 @@ const TransitionOverlay = () => {
   });
 
   return (
-    <div className="fixed inset-0 z-[100] bg-gradient-to-r from-(--lingua-grey) via-[#5A5A5A] to-(--lingua-grey) flex items-center justify-center">
+    <div className="fixed inset-0 z-[100] bg-gradient-to-r from-[var(--lingua-grey)] via-[#5A5A5A] to-[var(--lingua-grey)] flex items-center justify-center">
       {/* Animated particles */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute w-2 h-2 bg-[#F5F0E6] rounded-full top-1/4 left-1/4 animate-ping"></div>

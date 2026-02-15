@@ -23,24 +23,24 @@ const OnboardingPage1 = ({ setGoBack, goNext, goBack }) => {
         />
       </div>
 
-      <h1 className="text-5xl font-bold text-(--lingua-grey) mb-6 animate-fadeInUp">
+      <h1 className="text-5xl font-bold text-[var(--lexelo-page-fg)] mb-6 animate-fadeInUp">
         Welcome to Lexelo!
       </h1>
 
-      <p className="text-xl text-[#5A5A5A] mb-8 max-w-md mx-auto animate-fadeInUp animation-delay-300">
+      <p className="text-xl text-[var(--lexelo-muted-fg)] mb-8 max-w-md mx-auto animate-fadeInUp animation-delay-300">
         Your Latin learning journey begins here. Get ready to master the
         language of scholars!
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp animation-delay-500">
         <button
-          className="px-8 py-3 bg-(--lingua-grey) text-[#F5F0E6] rounded-lg font-semibold hover:bg-[#5A5A5A] transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center gap-2"
+          className="px-8 py-3 bg-[var(--lexelo-inverse-bg)] text-[var(--lexelo-light)] rounded-lg font-semibold hover:bg-[var(--lexelo-muted-fg)] transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center gap-2"
           onClick={goNext}
         >
           Continue Learning <ArrowRight className="w-4 h-4" />
         </button>
         <button
-          className="flex items-center gap-2 px-8 py-3 border-2 border-(--lingua-grey) text-(--lingua-grey) rounded-lg font-semibold hover:bg-(--lingua-grey) hover:text-[#F5F0E6] transition-all duration-300 hover:scale-105"
+          className="flex items-center gap-2 px-8 py-3 border-2 border-[var(--lexelo-inverse-bg)] text-[var(--lexelo-page-fg)] rounded-lg font-semibold hover:bg-[var(--lexelo-inverse-bg)] hover:text-[var(--lexelo-light)] transition-all duration-300 hover:scale-105"
           onClick={() => {
             setGoBack(true);
             setTimeout(() => {

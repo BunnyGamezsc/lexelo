@@ -1,10 +1,42 @@
-import React from "react";
+import Link from "next/link";
 import Image from "next/image";
+import { landingFooterLinks } from "./content/links";
+
+const linkClasses =
+  "text-[rgba(245,240,230,0.7)] hover:text-[#F5F0E6] transition-colors relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-px after:bg-[#D4B896] after:transition-all after:duration-300 hover:after:w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4B896] rounded-sm";
+
+function FooterLink({
+  label,
+  href,
+  external,
+}: {
+  label: string;
+  href: string;
+  external?: boolean;
+}) {
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer noopener"
+        className={linkClasses}
+      >
+        {label}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={linkClasses}>
+      {label}
+    </Link>
+  );
+}
 
 export default function Footer() {
   return (
     <footer className="bg-gradient-to-br from-[#1a202c] via-[#2d3748] to-[#1a202c] text-[#F5F0E6] pt-18 py-8 relative overflow-hidden">
-      {/* Subtle grid pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
           className="absolute inset-0"
@@ -13,18 +45,20 @@ export default function Footer() {
           }}
         ></div>
       </div>
+
       <div className="max-w-7xl mx-auto px-8 relative z-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div>
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-12 flex items-center justify-center text-[#F5F0E6] font-bold text-2xl relative">
-                <img
-                  src="lexelo-icon.png"
+                <Image
+                  src="/lexelo-icon.png"
                   alt="Lexelo Logo"
-                  className="w-12 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                  width={48}
+                  height={48}
+                  className="w-12 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                 />
               </div>
-
               <span className="text-2xl font-bold text-[#F5F0E6]">Lexelo</span>
             </div>
             <p className="text-[rgba(245,240,230,0.7)] leading-relaxed">
@@ -36,114 +70,45 @@ export default function Footer() {
           <div>
             <h4 className="text-[#F5F0E6] font-semibold mb-6">Product</h4>
             <ul className="space-y-3">
-              <li>
-                <a
-                  href="#features"
-                  className="text-[rgba(245,240,230,0.7)] hover:text-[#F5F0E6] transition-colors relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-px after:bg-[#D4B896] after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  Features
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-[rgba(245,240,230,0.7)] hover:text-[#F5F0E6] transition-colors relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-px after:bg-[#D4B896] after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  Download
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#languages"
-                  className="text-[rgba(245,240,230,0.7)] hover:text-[#F5F0E6] transition-colors relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-px after:bg-[#D4B896] after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  Contribute
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-[rgba(245,240,230,0.7)] hover:text-[#F5F0E6] transition-colors relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-px after:bg-[#D4B896] after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  Updates
-                </a>
-              </li>
+              {landingFooterLinks.product.map((link) => (
+                <li key={link.label}>
+                  <FooterLink
+                    label={link.label}
+                    href={link.href}
+                    external={link.external}
+                  />
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
             <h4 className="text-[#F5F0E6] font-semibold mb-6">Resources</h4>
             <ul className="space-y-3">
-              <li>
-                <a
-                  href="#"
-                  className="text-[rgba(245,240,230,0.7)] hover:text-[#F5F0E6] transition-colors relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-px after:bg-[#D4B896] after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  Documentation
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-[rgba(245,240,230,0.7)] hover:text-[#F5F0E6] transition-colors relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-px after:bg-[#D4B896] after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  Help Center
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-[rgba(245,240,230,0.7)] hover:text-[#F5F0E6] transition-colors relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-px after:bg-[#D4B896] after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  Community
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com/Bunnygamezsc/lexelo"
-                  className="text-[rgba(245,240,230,0.7)] hover:text-[#F5F0E6] transition-colors relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-px after:bg-[#D4B896] after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  Github
-                </a>
-              </li>
+              {landingFooterLinks.resources.map((link) => (
+                <li key={link.label}>
+                  <FooterLink
+                    label={link.label}
+                    href={link.href}
+                    external={link.external}
+                  />
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
             <h4 className="text-[#F5F0E6] font-semibold mb-6">Company</h4>
             <ul className="space-y-3">
-              <li>
-                <a
-                  href="#"
-                  className="text-[rgba(245,240,230,0.7)] hover:text-[#F5F0E6] transition-colors relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-px after:bg-[#D4B896] after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-[rgba(245,240,230,0.7)] hover:text-[#F5F0E6] transition-colors relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-px after:bg-[#D4B896] after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  Contact
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-[rgba(245,240,230,0.7)] hover:text-[#F5F0E6] transition-colors relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-px after:bg-[#D4B896] after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  Privacy
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-[rgba(245,240,230,0.7)] hover:text-[#F5F0E6] transition-colors relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-px after:bg-[#D4B896] after:transition-all after:duration-300 hover:after:w-full"
-                >
-                  Terms
-                </a>
-              </li>
+              {landingFooterLinks.company.map((link) => (
+                <li key={link.label}>
+                  <FooterLink
+                    label={link.label}
+                    href={link.href}
+                    external={link.external}
+                  />
+                </li>
+              ))}
             </ul>
           </div>
         </div>

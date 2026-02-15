@@ -67,7 +67,7 @@ export default function Onboarding() {
 
   return (
     <div
-      className={`transition-all duration-300 min-h-screen bg-gradient-to-br from-[#F5F0E6] via-[#E8DCC6] to-[#D4B896] flex flex-col items-center justify-center relative overflow-hidden`}
+      className={`transition-all duration-300 min-h-screen bg-gradient-to-br from-[var(--lexelo-light)] via-[var(--lexelo-semi)] to-[var(--lexelo-dark)] dark:from-background dark:via-card dark:to-muted flex flex-col items-center justify-center relative overflow-hidden`}
     >
       {/* Main content */}
       <div className={`${goBack ? "animate-bounceOut" : ""} mt-auto`}>
@@ -76,10 +76,10 @@ export default function Onboarding() {
 
       {/* Progress Bar */}
       <div
-        className={`${goBack ? "animate-bounceOut" : "animate-slideInUp"} w-120 h-2 overflow-hidden rounded-xl bg-[#F5F0E6] mb-6 mt-auto`}
+        className={`${goBack ? "animate-bounceOut" : "animate-slideInUp"} w-120 h-2 overflow-hidden rounded-xl bg-[var(--lexelo-surface-glass-strong)] dark:bg-[var(--lexelo-surface-glass)] mb-6 mt-auto`}
       >
         <div
-          className={`transition-all duration-500 ease-out bg-black h-2 rounded-sm`}
+          className={`transition-all duration-500 ease-out bg-[var(--lexelo-inverse-bg)] dark:bg-primary h-2 rounded-sm`}
           style={{ width: `${percentageDone}%` }}
         ></div>
       </div>

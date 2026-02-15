@@ -36,7 +36,7 @@ export default function Hero() {
                   Trusted by 1 language learner (the dev btw)
                 </span>
               </div>
-              <h1 className="text-5xl lg:text-6xl font-bold text-(--lingua-grey) leading-tight mb-8">
+              <h1 className="text-5xl lg:text-6xl font-bold text-[var(--lingua-grey)] leading-tight mb-8">
                 Master Latin Grammar & Vocabulary
                 <span className="block bg-gradient-to-r from-[#B8945F] via-[#D4B896] to-[#B8945F] bg-clip-text text-transparent animate-textShimmer bg-[length:200%_auto]">
                   the Smart Way
@@ -53,12 +53,12 @@ export default function Hero() {
                   onClick={() => {
                     setTransitioning(true);
                   }}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-(--lingua-grey) text-[#F5F0E6] font-semibold rounded-lg hover:shadow-lg hover:-translate-y-0.5 transition-all hover-scale hover:scale-105 active:scale-95"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--lingua-grey)] text-[#F5F0E6] font-semibold rounded-lg hover:shadow-lg hover:-translate-y-0.5 transition-all hover-scale hover:scale-105 active:scale-95"
                 >
                   Start Learning Now
                   <ArrowRight />
                 </button>
-                <button className="inline-flex items-center px-6 py-3 bg-white text-[#5A5A5A] font-semibold border-2 border-[#D4B896] rounded-lg hover:border-[#B8945F] hover:text-(--lingua-grey) transition-all hover-scale">
+                <button className="inline-flex items-center px-6 py-3 bg-white text-[#5A5A5A] font-semibold border-2 border-[#D4B896] rounded-lg hover:border-[#B8945F] hover:text-[var(--lingua-grey)] transition-all hover-scale">
                   <svg
                     className="mr-2 w-5 h-5"
                     viewBox="0 0 20 20"
@@ -99,8 +99,7 @@ export default function Hero() {
 
             <div>
               <div className="bg-white/90 backdrop-blur-[20px] rounded-3xl p-10 shadow-2xl border border-[rgba(212,185,150,0.3)] max-w-md mx-auto top-[-2rem] md:top-0 scale-92 md:scale-100 relative overflow-hidden animate-cardFloat">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[rgba(212,185,150,0.1)] to-transparent translate-x-[-100%] animate-cardShimmer"></div>
-                <div className="bg-(--lingua-grey) rounded-2xl p-6 mb-8">
+                <div className="bg-[var(--lingua-grey)] rounded-2xl p-6 mb-8">
                   <h3 className="text-[#F5F0E6] font-semibold mb-4">
                     Daily Latin Practice
                   </h3>

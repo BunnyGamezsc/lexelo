@@ -12,7 +12,7 @@ export default function Languages() {
     >
       <div className="max-w-7xl mx-auto px-8">
         <div className="text-center mb-10 animate-fadeInUp">
-          <h2 className="text-4xl font-bold text-(--lingua-grey) mb-6">
+          <h2 className="text-4xl font-bold text-[var(--lingua-grey)] mb-6">
             Expanding Your Language Journey
           </h2>
           <p className="text-xl text-[#5A5A5A] max-w-3xl mx-auto leading-relaxed">
@@ -25,7 +25,7 @@ export default function Languages() {
               Coming Soon
             </div>
             <div className="text-3xl font-semibold mb-4 mt-4">ES</div>
-            <h3 className="text-xl font-semibold text-(--lingua-grey) mb-2">
+            <h3 className="text-xl font-semibold text-[var(--lingua-grey)] mb-2">
               Spanish Support
             </h3>
             <p className="text-[#5A5A5A]">
@@ -38,7 +38,7 @@ export default function Languages() {
               Coming Soon
             </div>
             <div className="text-3xl font-semibold mb-4 mt-4">FR</div>
-            <h3 className="text-xl font-semibold text-(--lingua-grey) mb-2">
+            <h3 className="text-xl font-semibold text-[var(--lingua-grey)] mb-2">
               French Support
             </h3>
             <p className="text-[#5A5A5A]">
@@ -46,10 +46,10 @@ export default function Languages() {
               conversation.
             </p>
           </div>
-          <div className="hidden lg:flex bg-(--lingua-grey) w-1 rounded-3xl"></div>
+          <div className="hidden lg:flex bg-[var(--lingua-grey)] w-1 rounded-3xl"></div>
 
           <div className="xl:hidden w-auto md:col-span-2">
-            <hr className="border-[2px] border-(--lingua-grey) rounded-3xl" />
+            <hr className="border-[2px] border-[var(--lingua-grey)] rounded-3xl" />
           </div>
 
           <div className="relative xl:w-60 md:h-60 lg:h-auto p-8 bg-white/70 backdrop-blur-[20px] border-2 border-dashed border-[#D4B896] rounded-xl text-center hover:border-[#B8945F] hover:-translate-y-1 transition-all">
@@ -59,7 +59,7 @@ export default function Languages() {
             <div className="text-5xl mb-2 flex justify-center mt-4">
               <BookOpenText size="40" />
             </div>
-            <h3 className="text-xl font-semibold text-(--lingua-grey) mb-2">
+            <h3 className="text-xl font-semibold text-[var(--lingua-grey)] mb-2">
               Reading Comprehension
             </h3>
             <p className="text-[#5A5A5A]">
@@ -74,7 +74,7 @@ export default function Languages() {
             <div className="text-5xl mb-2 flex justify-center mt-4">
               <RefreshCcw size="40" />
             </div>
-            <h3 className="text-xl font-semibold text-(--lingua-grey) mb-2">
+            <h3 className="text-xl font-semibold text-[var(--lingua-grey)] mb-2">
               Translation Practice
             </h3>
             <p className="text-[#5A5A5A]">
