@@ -123,31 +123,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5f0e0fee31ef5ed1ba1316088939cea399010ed7731dba877ed44aeb407a75ea"
 
 [[package]]
-name = "app"
-version = "0.1.0"
-dependencies = [
- "base64 0.22.1",
- "log",
- "rand 0.9.2",
- "reqwest 0.11.27",
- "serde",
- "serde_json",
- "sha2",
- "tauri",
- "tauri-build",
- "tauri-plugin-clerk",
- "tauri-plugin-deep-link",
- "tauri-plugin-http",
- "tauri-plugin-keyring",
- "tauri-plugin-log",
- "tauri-plugin-opener",
- "tauri-plugin-single-instance",
- "tauri-plugin-store",
- "tauri-plugin-stronghold",
- "urlencoding",
-]
-
-[[package]]
 name = "arrayref"
 version = "0.3.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -722,8 +697,6 @@ dependencies = [
 [[package]]
 name = "clerk-fapi-rs"
 version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8e239d6a45c0bc0725bd254dbdd6f89918ea27c634cc753c173caca2f5b60fd0"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
@@ -2842,6 +2815,34 @@ name = "leb128fmt"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "09edd9e8b54e49e587e4f6295a7d29c3ea94d469cb40ab8ca70b288248a81db2"
+
+[[package]]
+name = "lexelo-desktop"
+version = "0.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "clerk-fapi-rs",
+ "log",
+ "rand 0.9.2",
+ "reqwest 0.11.27",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-clerk",
+ "tauri-plugin-deep-link",
+ "tauri-plugin-http",
+ "tauri-plugin-keyring",
+ "tauri-plugin-log",
+ "tauri-plugin-opener",
+ "tauri-plugin-single-instance",
+ "tauri-plugin-store",
+ "tauri-plugin-stronghold",
+ "tokio",
+ "url",
+ "urlencoding",
+]
 
 [[package]]
 name = "libappindicator"

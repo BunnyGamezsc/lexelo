@@ -114,7 +114,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-[rgba(245,240,230,0.1)] text-center text-[rgba(245,240,230,0.5)]">
-          <p>&copy; 2025 Lexelo. All rights reserved.</p>
+          <p>&copy; 2026 Lexelo. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -3,11 +3,23 @@ export const landingInternalLinks = {
   features: "/#features",
   about: "/about",
   contribute: "/contribute",
-  resources: "/resources",
-  resourcesDownload: "/resources#download",
-  resourcesPricing: "/resources#pricing",
-  resourcesDocs: "/resources#docs",
-  resourcesHelp: "/resources#help",
+  pricing: "/pricing",
+  pricingDownload: "/pricing#download",
+  download: "/pricing#download",
+  downloads: "/pricing#download",
+  pricingPlans: "/pricing#pricing",
+  pricingDocs: "/pricing#docs",
+  pricingHelp: "/pricing#help",
+  plans: "/pricing",
+  plansDownload: "/pricing#download",
+  plansPricing: "/pricing#pricing",
+  plansDocs: "/pricing#docs",
+  plansHelp: "/pricing#help",
+  resources: "/pricing",
+  resourcesDownload: "/pricing#download",
+  resourcesPricing: "/pricing#pricing",
+  resourcesDocs: "/pricing#docs",
+  resourcesHelp: "/pricing#help",
   contributeContact: "/contribute#contact",
   app: "/app",
   onboarding: "/app/onboarding",
@@ -15,6 +27,8 @@ export const landingInternalLinks = {
 
 export const landingExternalLinks = {
   releases: "https://github.com/BunnyGamezsc/lexelo/releases",
+  releasesLatest: "https://github.com/BunnyGamezsc/lexelo/releases/latest",
+  desktopSource: "https://github.com/BunnyGamezsc/lexelo/tree/main/apps/desktop",
   readme: "https://github.com/BunnyGamezsc/lexelo#readme",
   discussions: "https://github.com/BunnyGamezsc/lexelo/discussions",
   github: "https://github.com/BunnyGamezsc/lexelo",
@@ -27,7 +41,7 @@ export const landingNavLinks = [
   { label: "Features", href: landingInternalLinks.features },
   { label: "Contribute", href: landingInternalLinks.contribute },
   { label: "About", href: landingInternalLinks.about },
-  { label: "Resources", href: landingInternalLinks.resources },
+  { label: "Pricing", href: landingInternalLinks.pricing },
 ] as const;
 
 export type FooterLink = {
@@ -42,9 +56,9 @@ export const landingFooterLinks: Record<
 > = {
   product: [
     { label: "Features", href: landingInternalLinks.features },
-    { label: "Download", href: landingInternalLinks.resourcesDownload },
+    { label: "Pricing", href: landingInternalLinks.pricingPlans },
+    { label: "Download", href: landingInternalLinks.pricingDownload },
     { label: "Contribute", href: landingInternalLinks.contribute },
-    { label: "Updates", href: landingExternalLinks.releases, external: true },
   ],
   resources: [
     { label: "Documentation", href: landingExternalLinks.readme, external: true },

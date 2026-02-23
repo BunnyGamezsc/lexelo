@@ -10,7 +10,9 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "check-supplement-context": "if [ ! -d resources/tauri-plugin-clerk ]; then echo \"tauri-plugin-clerk not found\" && exit 1; fi && if [ ! -d resources/clerk-fapi-rs ]; then echo \"clerk-fapi-rs not found\" && exit 1; fi",
+    "install-supplement-context": "if [ ! -d resources/tauri-plugin-clerk ]; then git clone https://github.com/Nipsuli/tauri-plugin-clerk.git resources/tauri-plugin-clerk; fi && if [ ! -d resources/clerk-fapi-rs ]; then git clone https://github.com/Nipsuli/clerk-fapi-rs.git resources/clerk-fapi-rs; fi"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.37.4",

@@ -27,6 +27,10 @@ Lexelo was created to provide a easier language learning and flashcard tool than
 
 
 
+## UI Style Guide
+The canonical Lexelo UI standard for both landing and desktop/web app interfaces lives at:
+[STYLE_GUIDE.md](STYLE_GUIDE.md)
+
 ## Contributing
 Lexelo Desktop is written with NextJS (Javascript) and Tauri (Rust).
 ### Step 1: [Download Npm and NodeJS](https://nodejs.org/)
@@ -58,4 +62,3 @@ Lexelo Desktop is written with NextJS (Javascript) and Tauri (Rust).
 Licensed under the PolyForm Noncommercial License 1.0.0 \
 You may obtain a copy of the License at
 [https://polyformproject.org/licenses/noncommercial/1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0)
-

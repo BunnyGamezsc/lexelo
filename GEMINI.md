@@ -1,10 +1,53 @@
-# AGENTS.md
+# GEMINI.md
 
 This document provides guidance for AI coding assistants (Claude, ChatGPT, Cursor, etc.) working on this project.
 
 ## Project Overview
 
 This project uses modern web technologies and follows industry best practices. When working on this codebase, please adhere to the following guidelines and conventions.
+
+## Architecture
+
+### Tech Stack
+
+- **Monorepo/Tooling**: `pnpm` workspaces + Turborepo (`turbo`)
+- **Language**: TypeScript
+- **Web App (`apps/web`)**: Next.js 16 + React 19 + Tailwind CSS 4
+- **Desktop App (`apps/desktop`)**: Next.js 16 + React 19 + Tauri 2
+- **Shared UI (`packages/ui`)**: React component library with Radix UI primitives and Tailwind-based styling
+- **Auth**: Clerk (`@clerk/nextjs` & `tauri-plugin-clerk`/`clerk-fapi-rs`) for web and desktop flows
+- **Quality/Formatting**: ESLint (shared config in `packages/eslint-config`) + Prettier
+
+### Directory Structure
+
+```
+lexelo/
+├─ apps/
+│  ├─ web/          # Web application
+│  └─ desktop/      # Desktop application (Tauri/Electron)
+├─ packages/
+│  ├─ ui/           # Shared UI components
+│  ├─ eslint-config/# Shared ESLint configuration
+│  └─ typescript-config/ # Shared TypeScript configuration
+├─ AGENTS.md
+├─ STYLE_GUIDE.md
+├─ package.json
+├─ pnpm-workspace.yaml
+└─ turbo.json
+```
+
+- Keep app-specific logic inside `apps/web` and `apps/desktop`.
+- Place reusable code and tooling in `packages/*`.
+
+### Cross-App Behavior (Web + Desktop)
+
+- If a frontend feature is likely to be used by both `apps/web` and `apps/desktop` (this includes most main app UI and login flows), design it around a **single universal function contract**.
+- The shared component/hook should call one logical action and receive the same response shape regardless of platform.
+- Backend execution should be selected by platform-specific adapters:
+  - `apps/web`: can use server actions (`"use server"`) or web-native server paths.
+  - `apps/desktop`: must call authenticated API endpoints (typically hosted by the web backend) using some auth flow so that the api can only be accessed by the desktop app.
+- Keep backend/provider details (Supabase, DB vendor, file storage, etc.) behind the API/service boundary so storage and infrastructure remain hot-swappable. (Ex. Using drizzle instead of Supabase api)
+- Do not embed provider-specific logic directly in shared UI components. Keep provider coupling in backend services/adapters only.
 
 ## Package Manager
 
@@ -32,6 +75,7 @@ All package installations, script executions, and dependency management should u
 - Prefer functional components and hooks in React
 - Keep components small and focused on a single responsibility
 - Extract complex logic into custom hooks or utility functions
+- **NEVER** use absolute paths
 
 ### File Naming
 
@@ -59,7 +103,7 @@ All package installations, script executions, and dependency management should u
 - **Fixing a bug**: Reproduce the issue, identify the root cause, implement the fix, verify the fix works
 - **Refactoring**: Ensure tests pass before and after, maintain existing functionality, improve code quality
 
-### Context7 Integration
+### Useful Context & Context7 Integration
 
 When you need code generation, setup/configuration steps, or library/API documentation, automatically use the Context7 MCP tools to:
 1. Resolve library IDs
@@ -69,6 +113,9 @@ When you need code generation, setup/configuration steps, or library/API documen
 You don't need explicit requests to use Context7 - use it proactively when working with libraries and frameworks.
 
 (This usually works but if there is an error, prompt the user to fix it!)
+
+[Note: Some packages aren't included in context7, ie. clerk-fapi-rs, tauri-plugin-clerk]
+- `clerk-fapi-rs` and `tauri-plugin-clerk` can be installed using `pnpm install-supplement-context` (in the apps/desktop directory) (and live in apps/desktop/resources) **AND SHOULD BE USED AS CONTEXT for any prompts related to these packages**
 
 ### Styling
 
@@ -88,6 +135,6 @@ You don't need explicit requests to use Context7 - use it proactively when worki
 
 ---
 
-**Last Updated**: 2026-02-14
+**Last Updated**: 2026-02-23
 
 For questions or clarifications about this project, consult the team or project documentation.

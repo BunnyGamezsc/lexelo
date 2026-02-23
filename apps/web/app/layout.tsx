@@ -21,10 +21,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`font-sans antialiased `}>
         <Providers>
-          <div className="absolute w-full p-4">
-            <div className="float-right">
-              <ModeToggle></ModeToggle>
-            </div>
+          <div className="fixed right-4 bottom-4 z-[70]">
+            <ModeToggle />
           </div>
           {children}
         </Providers>

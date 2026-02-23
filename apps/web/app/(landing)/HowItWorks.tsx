@@ -6,15 +6,14 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="pb-2 pt-5"
-      style={{ backgroundColor: "#fbfcfd" }}
+      className="pb-2 pt-5 bg-[#FBFCFD] dark:bg-[#181818]"
     >
       <div className="max-w-7xl mx-auto px-8">
         <div className="text-center mb-10 animate-fadeInUp">
-          <h2 className="text-4xl font-bold text-[var(--lingua-grey)] mb-6">
+          <h2 className="text-4xl font-bold text-[var(--lingua-grey)] mb-6 dark:text-[#F1E7D2]">
             Your Own Path to Language Mastery
           </h2>
-          <p className="text-xl text-[#5A5A5A] max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-[#5A5A5A] max-w-3xl mx-auto leading-relaxed dark:text-[#D4B896]">
             You can also learn Latin on your own with our self-paced curriculum
             that builds knowledge systematically and ensures long-term
             retention.
@@ -26,10 +25,10 @@ export default function HowItWorks() {
             <div className="w-20 h-20 bg-[var(--lingua-grey)] rounded-full flex items-center justify-center text-[#F5F0E6] font-bold text-2xl mx-auto mb-8 animate-stepPulse">
               1
             </div>
-            <h3 className="text-xl font-bold text-[var(--lingua-grey)] mb-4">
+            <h3 className="text-xl font-bold text-[var(--lingua-grey)] mb-4 dark:text-[#F1E7D2]">
               Start with Foundations
             </h3>
-            <p className="text-[#5A5A5A] leading-relaxed">
+            <p className="text-[#5A5A5A] leading-relaxed dark:text-[#D4B896]">
               Begin with essential grammar concepts and core vocabulary through
               guided lessons and interactive exercises that build your Latin
               foundation.
@@ -40,10 +39,10 @@ export default function HowItWorks() {
             <div className="w-20 h-20 bg-[var(--lingua-grey)] rounded-full flex items-center justify-center text-[#F5F0E6] font-bold text-2xl mx-auto mb-8 animate-stepPulse animation-delay-1300">
               2
             </div>
-            <h3 className="text-xl font-bold text-[var(--lingua-grey)] mb-4">
+            <h3 className="text-xl font-bold text-[var(--lingua-grey)] mb-4 dark:text-[#F1E7D2]">
               Practice Actively
             </h3>
-            <p className="text-[#5A5A5A] leading-relaxed">
+            <p className="text-[#5A5A5A] leading-relaxed dark:text-[#D4B896]">
               Reinforce learning through spaced-repetition vocabulary training
               and personalized grammar exercises that adapt to your progress.
             </p>
@@ -53,10 +52,10 @@ export default function HowItWorks() {
             <div className="w-20 h-20 bg-[var(--lingua-grey)] rounded-full flex items-center justify-center text-[#F5F0E6] font-bold text-2xl mx-auto mb-8 animate-stepPulse animation-delay-2600">
               3
             </div>
-            <h3 className="text-xl font-bold text-[var(--lingua-grey)] mb-4">
+            <h3 className="text-xl font-bold text-[var(--lingua-grey)] mb-4 dark:text-[#F1E7D2]">
               Master & Expand
             </h3>
-            <p className="text-[#5A5A5A] leading-relaxed">
+            <p className="text-[#5A5A5A] leading-relaxed dark:text-[#D4B896]">
               Track your progress and supplement with custom flashcards for
               comprehensive understanding and long-term retention.
             </p>

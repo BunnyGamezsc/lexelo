@@ -11,10 +11,10 @@ export default function CTA() {
   if (transitioning) return <TransitionOverlay />;
 
   return (
-    <section className="py-32 bg-gradient-to-b from-[#fbfcfd] via-[#f5f0e6] to-[#f5f0e6]">
+    <section className="py-32 bg-gradient-to-b from-[#fbfcfd] via-[#f5f0e6] to-[#f5f0e6] dark:from-[#181818] dark:via-[#1b1814] dark:to-[#151515]">
       <div className="max-w-7xl mx-auto px-8">
-        <div className="bg-[var(--lingua-grey)] rounded-3xl p-10 sm:p-16 text-center relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[rgba(212,185,150,0.1)] to-transparent animate-ctaShine"></div>
+        <div className="bg-[var(--lingua-grey)] rounded-3xl p-10 sm:p-16 text-center relative overflow-hidden dark:bg-[#1e1e1e] dark:border dark:border-[rgba(212,185,150,0.28)]">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[rgba(212,185,150,0.1)] to-transparent animate-ctaShine dark:via-[rgba(212,185,150,0.14)]"></div>
           <h2 className="text-3xl sm:text-4xl font-bold text-[#F5F0E6] mb-8 animate-zoomIn">
             Ready to Transform Your Latin Studies?
           </h2>
@@ -27,14 +27,15 @@ export default function CTA() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8 relative z-10">
             <button
               onClick={() => setTransitioning(true)}
-              className="bg-[var(--lingua-grey)] text-[#F5F0E6] px-9 py-4 rounded-full font-semibold text-lg text-center transition-all duration-300 hover:translate-y-[-3px] hover:shadow-xl relative overflow-hidden group border-2 border-[#F5F0E6] hover-scale hover:scale-105 active:scale-95"
+              className="bg-[var(--lingua-grey)] text-[#F5F0E6] px-9 py-4 rounded-full font-semibold text-lg text-center transition-all duration-300 hover:translate-y-[-3px] hover:shadow-xl relative overflow-hidden group border-2 border-[#F5F0E6] hover-scale hover:scale-105 active:scale-95 dark:bg-[#2a2a2a] dark:border-[#D4B896]"
             >
               <span className="relative z-10 px-3">Get Started</span>
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>
             </button>
             <Link
               href={landingInternalLinks.contribute}
-              className="bg-transparent text-[#F5F0E6] px-9 py-4 border-2 border-[#D4B896] rounded-full font-semibold text-lg text-center transition-all duration-300 hover:bg-[#D4B896] hover:text-[var(--lingua-grey)] hover:translate-y-[-2px] hover-scale"
+              prefetch={true}
+              className="bg-transparent text-[#F5F0E6] px-9 py-4 border-2 border-[#D4B896] rounded-full font-semibold text-lg text-center transition-all duration-300 hover:bg-[#D4B896] hover:text-[var(--lingua-grey)] hover:translate-y-[-2px] hover-scale dark:hover:bg-[#B8945F] dark:hover:text-[#151515]"
             >
               Contribute
             </Link>
