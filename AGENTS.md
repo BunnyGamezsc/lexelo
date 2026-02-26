@@ -96,6 +96,7 @@ All package installations, script executions, and dependency management should u
 3. **Check for errors** - Run linting, type checking, and tests
 4. **Be explicit** - Clearly explain what you're changing and why
 5. **Follow existing patterns** - Match the coding style and patterns already in the project
+6. **Use edit-based workflows** - Prefer edit/apply-patch style changes and avoid using `cat` to inspect files
 
 ### Common Tasks
 

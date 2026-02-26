@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Loader2 } from "lucide-react";
+
 import { cn } from "#/lib/utils";
 import { Button } from "#/ui/button";
 import {
@@ -36,8 +37,14 @@ type LoginProps = {
   statusMessage?: string | null;
   secondFactorStrategies?: SecondFactorStrategy[];
   selectedSecondFactor?: SecondFactorStrategy | null;
-  onIdentifierPasswordSubmit?: (identifier: string, password: string) => Promise<void> | void;
-  onSecondFactorSubmit?: (strategy: SecondFactorStrategy, code: string) => Promise<void> | void;
+  onIdentifierPasswordSubmit?: (
+    identifier: string,
+    password: string,
+  ) => Promise<void> | void;
+  onSecondFactorSubmit?: (
+    strategy: SecondFactorStrategy,
+    code: string,
+  ) => Promise<void> | void;
   onSelectSecondFactor?: (strategy: SecondFactorStrategy) => Promise<void> | void;
   onStartOAuth?: (provider: OAuthProvider) => Promise<void> | void;
   onOpenWebSignIn?: () => Promise<void> | void;
@@ -158,8 +165,8 @@ const Login = ({
               </Button>
 
               <p className="text-muted-foreground text-center text-xs">
-                Email/password and Google/Microsoft are completed in your system browser, then
-                deep-linked back to desktop.
+                Email/password and Google/Microsoft are completed in your
+                system browser, then deep-linked back to desktop.
               </p>
             </div>
           ) : null}
@@ -219,7 +226,9 @@ const Login = ({
               </div>
 
               <div className="relative my-4 text-center text-xs">
-                <span className="bg-card text-muted-foreground px-2">or continue with</span>
+                <span className="bg-card text-muted-foreground px-2">
+                  or continue with
+                </span>
               </div>
 
               <div className="grid gap-2">
@@ -251,7 +260,9 @@ const Login = ({
                     <Button
                       key={strategy}
                       type="button"
-                      variant={effectiveSecondFactor === strategy ? "default" : "outline"}
+                      variant={
+                        effectiveSecondFactor === strategy ? "default" : "outline"
+                      }
                       disabled={isBusy}
                       onClick={() => {
                         void onSelectSecondFactor?.(strategy);

@@ -8,31 +8,124 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useReducer,
   useRef,
   useState,
   type ReactNode,
 } from "react";
 
 export const KEYCHAIN_NOTICE_STORAGE_KEY = "lexelo.desktop.keychain.notice.v1";
-const AUTH_STATE_EVENT = "lexelo://auth-state";
-const AUTH_BOOTSTRAP_RETRY_MS = 1500;
-const AUTH_ERROR_CODE_KEYCHAIN_ACCESS_REQUIRED = "KEYCHAIN_ACCESS_REQUIRED";
-const AUTH_PHASE_WAITING_FOR_SECURE_STORAGE = "waiting_for_secure_storage";
-const AUTH_PHASE_RESOLVING_AUTH = "resolving_auth";
-const AUTH_PHASE_READY = "ready";
-const AUTH_PHASE_ERROR = "error";
+const authBootstrapRetryMs = 1500;
+const phaseWaiting = "waiting_for_secure_storage";
+const phaseResolving = "resolving_auth";
+const phaseReady = "ready";
+const phaseError = "error";
 
 type AuthBootstrapPhase =
-  | typeof AUTH_PHASE_WAITING_FOR_SECURE_STORAGE
-  | typeof AUTH_PHASE_RESOLVING_AUTH
-  | typeof AUTH_PHASE_READY
-  | typeof AUTH_PHASE_ERROR;
+  | typeof phaseWaiting
+  | typeof phaseResolving
+  | typeof phaseReady
+  | typeof phaseError;
 
 type AuthStatusResponse = {
   isSignedIn: boolean;
   userId?: string | null;
   displayName?: string | null;
   bootstrapPhase?: AuthBootstrapPhase | null;
+};
+
+type DesktopAuthSessionState = {
+  isSignedIn: boolean;
+  userId: string | null;
+  displayName: string | null;
+  isAuthResolved: boolean;
+  bootstrapPhase: AuthBootstrapPhase | null;
+};
+
+type DesktopAuthSessionAction =
+  | { type: "bootstrap_started" }
+  | { type: "bootstrap_failed" }
+  | { type: "keychain_notice_pending" }
+  | {
+      type: "bootstrap_succeeded";
+      response: AuthStatusResponse;
+      phase: AuthBootstrapPhase;
+    }
+  | {
+      type: "event_phase_pending";
+      phase: typeof phaseWaiting | typeof phaseResolving;
+    }
+  | { type: "event_ready"; response: AuthStatusResponse }
+  | { type: "set_signed_in"; next: boolean };
+
+const initialDesktopAuthSessionState: DesktopAuthSessionState = {
+  isSignedIn: false,
+  userId: null,
+  displayName: null,
+  isAuthResolved: false,
+  bootstrapPhase: null,
+};
+
+const desktopAuthSessionReducer = (
+  state: DesktopAuthSessionState,
+  action: DesktopAuthSessionAction,
+): DesktopAuthSessionState => {
+  switch (action.type) {
+    case "bootstrap_started":
+      return {
+        ...state,
+        isAuthResolved: false,
+        bootstrapPhase: phaseResolving,
+      };
+    case "bootstrap_succeeded":
+      return {
+        isSignedIn: action.response.isSignedIn,
+        userId: action.response.userId ?? null,
+        displayName: action.response.displayName ?? null,
+        isAuthResolved: true,
+        bootstrapPhase: action.phase,
+      };
+    case "event_phase_pending":
+      return {
+        ...state,
+        bootstrapPhase: action.phase,
+        isAuthResolved: false,
+      };
+    case "event_ready":
+      return {
+        isSignedIn: action.response.isSignedIn,
+        userId: action.response.userId ?? null,
+        displayName: action.response.displayName ?? null,
+        isAuthResolved: true,
+        bootstrapPhase: action.response.bootstrapPhase ?? phaseReady,
+      };
+    case "bootstrap_failed":
+      return {
+        isSignedIn: false,
+        userId: null,
+        displayName: null,
+        isAuthResolved: true,
+        bootstrapPhase: phaseError,
+      };
+    case "keychain_notice_pending":
+      return {
+        isSignedIn: false,
+        userId: null,
+        displayName: null,
+        isAuthResolved: true,
+        bootstrapPhase: null,
+      };
+    case "set_signed_in":
+      return {
+        isSignedIn: action.next,
+        userId: action.next ? state.userId : null,
+        displayName: action.next ? state.displayName : null,
+        isAuthResolved: true,
+        bootstrapPhase: phaseReady,
+      };
+    default:
+      return state;
+  }
 };
 
 type DesktopAuthSessionContextValue = {
@@ -46,131 +139,122 @@ type DesktopAuthSessionContextValue = {
   startBootstrap: () => void;
 };
 
-const DesktopAuthSessionContext = createContext<DesktopAuthSessionContextValue | null>(null);
-
-const extractErrorMessage = (error: unknown): string => {
-  if (typeof error === "string") {
-    return error;
-  }
-  if (error instanceof Error) {
-    return error.message;
-  }
-  if (typeof error === "object" && error !== null) {
-    const maybeMessage = (error as { message?: unknown }).message;
-    if (typeof maybeMessage === "string") {
-      return maybeMessage;
-    }
-    try {
-      return JSON.stringify(error);
-    } catch {
-      return String(error);
-    }
-  }
-  return String(error);
-};
-
-const extractAuthErrorCode = (error: unknown): string | null => {
-  const message = extractErrorMessage(error);
-  const matchedCode = message.match(/AUTH_ERROR\|code=([^|]+)/);
-  return matchedCode?.[1] ?? null;
-};
+const DesktopAuthSessionContext =
+  createContext<DesktopAuthSessionContextValue | null>(null);
 
 const readKeychainNoticeAccepted = (): boolean => {
   try {
-    return window.localStorage.getItem(KEYCHAIN_NOTICE_STORAGE_KEY) === "accepted";
+    return (
+      window.localStorage.getItem(KEYCHAIN_NOTICE_STORAGE_KEY) === "accepted"
+    );
   } catch {
     return false;
   }
 };
 
-export const DesktopAuthSessionProvider = ({ children }: { children: ReactNode }) => {
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const [userId, setUserId] = useState<string | null>(null);
-  const [displayName, setDisplayName] = useState<string | null>(null);
-  const [isAuthResolved, setIsAuthResolved] = useState(false);
-  const [bootstrapPhase, setBootstrapPhase] = useState<AuthBootstrapPhase | null>(null);
+export const DesktopAuthSessionProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
+  const [state, dispatch] = useReducer(
+    desktopAuthSessionReducer,
+    initialDesktopAuthSessionState,
+  );
   const [isKeychainNoticeAccepted, setIsKeychainNoticeAccepted] = useState(() =>
     readKeychainNoticeAccepted(),
   );
   const bootstrapInFlightRef = useRef(false);
-
-  const applySignedOutState = useCallback(() => {
-    setIsSignedIn(false);
-    setUserId(null);
-    setDisplayName(null);
-  }, []);
-
-  const applyAuthStatus = useCallback((response: AuthStatusResponse) => {
-    setIsSignedIn(response.isSignedIn);
-    setUserId(response.userId ?? null);
-    setDisplayName(response.displayName ?? null);
-  }, []);
+  const isAuthResolvedRef = useRef(
+    initialDesktopAuthSessionState.isAuthResolved,
+  );
+  const bootstrapGenerationRef = useRef(0);
 
   const refreshAuthStatus = useCallback(async (): Promise<boolean> => {
     if (bootstrapInFlightRef.current) {
       return false;
     }
 
+    const currentGeneration = ++bootstrapGenerationRef.current;
     bootstrapInFlightRef.current = true;
-    setBootstrapPhase(AUTH_PHASE_RESOLVING_AUTH);
+    isAuthResolvedRef.current = false;
+    dispatch({ type: "bootstrap_started" });
+
     try {
       const response = await invoke<AuthStatusResponse>("auth_bootstrap");
-      applyAuthStatus(response);
-      setBootstrapPhase(response.bootstrapPhase ?? AUTH_PHASE_READY);
-      setIsAuthResolved(true);
-      return response.isSignedIn;
-    } catch (error) {
-      const authErrorCode = extractAuthErrorCode(error);
-      if (authErrorCode === AUTH_ERROR_CODE_KEYCHAIN_ACCESS_REQUIRED) {
-        setBootstrapPhase(AUTH_PHASE_WAITING_FOR_SECURE_STORAGE);
-        setIsAuthResolved(false);
+
+      // If a newer bootstrap has superseded this one (or it was resolved), abort.
+      if (currentGeneration !== bootstrapGenerationRef.current) {
         return false;
       }
-      applySignedOutState();
-      setBootstrapPhase(AUTH_PHASE_ERROR);
-      setIsAuthResolved(true);
+
+      const phase = response.bootstrapPhase ?? phaseReady;
+
+      if (phase === phaseWaiting || phase === phaseResolving) {
+        dispatch({ type: "event_phase_pending", phase });
+        return false;
+      }
+
+      isAuthResolvedRef.current = true;
+      dispatch({ type: "bootstrap_succeeded", response, phase });
+      return response.isSignedIn;
+    } catch {
+      if (currentGeneration !== bootstrapGenerationRef.current) {
+        return false;
+      }
+      isAuthResolvedRef.current = true;
+      dispatch({ type: "bootstrap_failed" });
       return false;
     } finally {
-      bootstrapInFlightRef.current = false;
+      if (currentGeneration === bootstrapGenerationRef.current) {
+        bootstrapInFlightRef.current = false;
+      }
     }
-  }, [applyAuthStatus, applySignedOutState]);
+  }, []);
 
   const startBootstrap = useCallback(() => {
     setIsKeychainNoticeAccepted(true);
-    setIsAuthResolved(false);
-    setBootstrapPhase(AUTH_PHASE_RESOLVING_AUTH);
+    isAuthResolvedRef.current = false;
+    dispatch({ type: "bootstrap_started" });
     void refreshAuthStatus();
   }, [refreshAuthStatus]);
 
   useEffect(() => {
     if (!isKeychainNoticeAccepted) {
-      applySignedOutState();
-      setBootstrapPhase(null);
-      setIsAuthResolved(true);
+      isAuthResolvedRef.current = true;
+      dispatch({ type: "keychain_notice_pending" });
       return;
     }
 
-    setIsAuthResolved(false);
-    setBootstrapPhase(AUTH_PHASE_RESOLVING_AUTH);
+    isAuthResolvedRef.current = false;
+    dispatch({ type: "bootstrap_started" });
     void refreshAuthStatus();
-  }, [applySignedOutState, isKeychainNoticeAccepted, refreshAuthStatus]);
+  }, [isKeychainNoticeAccepted, refreshAuthStatus]);
 
   useEffect(() => {
-    if (!isKeychainNoticeAccepted || isAuthResolved) {
+    if (!isKeychainNoticeAccepted || state.isAuthResolved) {
       return;
     }
-    if (bootstrapPhase !== AUTH_PHASE_WAITING_FOR_SECURE_STORAGE) {
+    if (
+      state.bootstrapPhase !== phaseWaiting &&
+      state.bootstrapPhase !== phaseResolving
+    ) {
       return;
     }
 
     const retryId = window.setTimeout(() => {
       void refreshAuthStatus();
-    }, AUTH_BOOTSTRAP_RETRY_MS);
+    }, authBootstrapRetryMs);
 
     return () => {
       window.clearTimeout(retryId);
     };
-  }, [bootstrapPhase, isAuthResolved, isKeychainNoticeAccepted, refreshAuthStatus]);
+  }, [
+    isKeychainNoticeAccepted,
+    refreshAuthStatus,
+    state.bootstrapPhase,
+    state.isAuthResolved,
+  ]);
 
   useEffect(() => {
     let disposed = false;
@@ -178,29 +262,30 @@ export const DesktopAuthSessionProvider = ({ children }: { children: ReactNode }
 
     const attach = async () => {
       try {
-        const stop = await listen<AuthStatusResponse>(AUTH_STATE_EVENT, (event) => {
-          if (disposed || !isKeychainNoticeAccepted) {
-            return;
-          }
-
-          const phase = event.payload.bootstrapPhase ?? AUTH_PHASE_READY;
-          setBootstrapPhase(phase);
-
-          if (
-            phase === AUTH_PHASE_WAITING_FOR_SECURE_STORAGE ||
-            phase === AUTH_PHASE_RESOLVING_AUTH
-          ) {
-            // Ignore late phase-only events once bootstrap is already resolved.
-            if (!bootstrapInFlightRef.current && isAuthResolved) {
+        const stop = await listen<AuthStatusResponse>(
+          "lexelo://auth-state",
+          (event) => {
+            if (disposed || !isKeychainNoticeAccepted) {
               return;
             }
-            setIsAuthResolved(false);
-            return;
-          }
 
-          applyAuthStatus(event.payload);
-          setIsAuthResolved(true);
-        });
+            const phase = event.payload.bootstrapPhase ?? phaseReady;
+            if (phase === phaseWaiting || phase === phaseResolving) {
+              // Ignore stale pending phases once auth is resolved, and ignore
+              // background phase churn when no bootstrap request is active.
+              if (!bootstrapInFlightRef.current || isAuthResolvedRef.current) {
+                return;
+              }
+              dispatch({ type: "event_phase_pending", phase });
+              return;
+            }
+
+            isAuthResolvedRef.current = true;
+            bootstrapGenerationRef.current++; // Force ignore of active bootstrap promises
+            bootstrapInFlightRef.current = false;
+            dispatch({ type: "event_ready", response: event.payload });
+          },
+        );
 
         if (!disposed) {
           unlisten = stop;
@@ -218,36 +303,22 @@ export const DesktopAuthSessionProvider = ({ children }: { children: ReactNode }
         unlisten();
       }
     };
-  }, [applyAuthStatus, isAuthResolved, isKeychainNoticeAccepted]);
+  }, [isKeychainNoticeAccepted]);
 
   const contextValue = useMemo<DesktopAuthSessionContextValue>(
     () => ({
-      isSignedIn,
-      userId,
-      displayName,
-      isAuthResolved,
-      bootstrapPhase,
+      isSignedIn: state.isSignedIn,
+      userId: state.userId,
+      displayName: state.displayName,
+      isAuthResolved: state.isAuthResolved,
+      bootstrapPhase: state.bootstrapPhase,
       setSignedIn: (next: boolean) => {
-        setIsSignedIn(next);
-        if (!next) {
-          setUserId(null);
-          setDisplayName(null);
-        }
-        setBootstrapPhase(AUTH_PHASE_READY);
-        setIsAuthResolved(true);
+        dispatch({ type: "set_signed_in", next });
       },
       refreshAuthStatus,
       startBootstrap,
     }),
-    [
-      bootstrapPhase,
-      displayName,
-      isAuthResolved,
-      isSignedIn,
-      refreshAuthStatus,
-      startBootstrap,
-      userId,
-    ],
+    [refreshAuthStatus, startBootstrap, state],
   );
 
   return (
@@ -260,7 +331,9 @@ export const DesktopAuthSessionProvider = ({ children }: { children: ReactNode }
 export const useDesktopAuthSession = () => {
   const context = useContext(DesktopAuthSessionContext);
   if (!context) {
-    throw new Error("useDesktopAuthSession must be used within DesktopAuthSessionProvider");
+    throw new Error(
+      "useDesktopAuthSession must be used within DesktopAuthSessionProvider",
+    );
   }
   return context;
 };
@@ -274,8 +347,8 @@ export const DesktopSignedIn = ({ children }: { children: ReactNode }) => {
 };
 
 export const DesktopSignedOut = ({ children }: { children: ReactNode }) => {
-  const { isAuthResolved, isSignedIn } = useDesktopAuthSession();
-  if (!isAuthResolved || isSignedIn) {
+  const { isSignedIn } = useDesktopAuthSession();
+  if (isSignedIn) {
     return null;
   }
   return <>{children}</>;

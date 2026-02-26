@@ -1,4 +1,4 @@
-# GEMINI.md
+# AGENTS.md
 
 This document provides guidance for AI coding assistants (Claude, ChatGPT, Cursor, etc.) working on this project.
 
@@ -42,7 +42,7 @@ lexelo/
 ### Cross-App Behavior (Web + Desktop)
 
 - If a frontend feature is likely to be used by both `apps/web` and `apps/desktop` (this includes most main app UI and login flows), design it around a **single universal function contract**.
-- The shared component/hook should call one logical action and receive the same response shape regardless of platform.
+- The shared component/hook should call logical actions and receive the same response shapes regardless of platform. (ie. If I want to fetch some data about the user's saved sets, I should be able to call the same function in both apps and receive the same response shape.)
 - Backend execution should be selected by platform-specific adapters:
   - `apps/web`: can use server actions (`"use server"`) or web-native server paths.
   - `apps/desktop`: must call authenticated API endpoints (typically hosted by the web backend) using some auth flow so that the api can only be accessed by the desktop app.
@@ -96,6 +96,7 @@ All package installations, script executions, and dependency management should u
 3. **Check for errors** - Run linting, type checking, and tests
 4. **Be explicit** - Clearly explain what you're changing and why
 5. **Follow existing patterns** - Match the coding style and patterns already in the project
+6. **Use edit-based workflows** - Prefer edit/apply-patch style changes and avoid using `cat` to inspect files
 
 ### Common Tasks
 
